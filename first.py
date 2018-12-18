@@ -137,13 +137,18 @@ sen = ["a", "b", "c", "d"]
 
 senc = ("a", "b", "c", "d")
 list(senc)
-$print(senc[2])
+#print(senc[2])
 '''
 
 
 1. Given ["a", "b", "c", "d"], print each letter along with its corresponding index.
 
+'''
+lister = ["a", "b", "c", "d"]
+printer = [v for v in lister]
+print(printer)
 
+'''
 1. Write a function that takes as input a number x and tries to return 1/x. Consider what should happen when x == 0? What should the function's return data type be?
 
 '''
