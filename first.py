@@ -57,5 +57,95 @@ You would use a tuple. Since we know everyone has a name and an id we could save
 
 1. What does Optional mean? When should you use it?
 '''
+'''
+### Code challenges
+
+1. Given [1, 2, 3, 4, 5], write a list comprehension that multiplies every member of the list by 3.
+
+'''
+list1 = [1,2,3,4,5]
+multiplied = [item*3 for item in list1]
+#print(multiplied)
+'''
+
+1. Given [-2, 0, -1, 5, 2], write a list comprehension that filters out any number <= 0 and adds 9 to each of the remaining members.
+
+'''
+list2 = [-2, 0, -1, 5, 2]
+filtered = [x+9 for x in list2 if x <= 0]
+#print(filtered)
+'''
+
+1. Given [-2, 0, -1, 5, 2], write a list comprehension that adds 9 to each member if it is > 0 or subtracts 3 if it is <= 0.
+'''
+l = [-2, 0, -1, 5, 2]
+filteredA = [v+9 if v > 0 else v-3 for v in l]
+#print(filteredA)
+
+'''
+1. Return [2, 1, 0, -1, -2] reversed.
+
+'''
+ll = [2, 1, 0, -1, -2]
+ll.reverse()
+#print(ll)
+'''
+
+1. Return "Hello World" sorted alphabetically.
+'''
+h = 'Hello World'
+b = ''.join(sorted(h.lower()))
+#print(b)
+
+'''
+
+1. Convert ["a", "b", "c"] to a set.
+
+'''
+listy = ["a", "b", "c"]
+#print(set(listy))
+
+'''
+1. Given {"english": "hello", "spanish": "hola", "french": "bonjour"}, return all the greetings (without their corresponding language).
+
+'''
+given = {"english": "hello", "spanish": "hola", "french": "bonjour"}
+#print(given.keys())
+
+'''
+1. Given {"english": "hello", "spanish": "hola", "french": "bonjour"}, return all the languages (without their corresponding greeting).
+'''
+#print(given.values())
+
+'''
+
+1. Given {"english": "hello", "spanish": "hola", "french": "bonjour"}, invert the keys and values so that the greeting is the key, and the language is the value. Use a dictionary comprehension to do this.
+'''
+
+'''
+
+1. Given ["a", "b", "c", "d"], return the letter "c".
+
+'''
+sen = ["a", "b", "c", "d"]
+#print(sen[2])
+
+'''
+
+1. Given ("a", "b", "c", "d"), return the letter "c".
+'''
+
+senc = ("a", "b", "c", "d")
+list(senc)
+$print(senc[2])
+'''
+
+
+1. Given ["a", "b", "c", "d"], print each letter along with its corresponding index.
+
+
+1. Write a function that takes as input a number x and tries to return 1/x. Consider what should happen when x == 0? What should the function's return data type be?
+
+'''
 
 
