@@ -276,7 +276,7 @@ coffee = {
     'gluten-free' : True,
 
 }
-grocery = [ romaine, steak, almonds, cheese, bread, coffee, spice]
+grocery = [romaine, steak, almonds, cheese, bread, coffee, spice]
 grocery_types = ['cold', 'package', 'lux']
 
 def avg_price_helper(list: list, target: str) -> float:
