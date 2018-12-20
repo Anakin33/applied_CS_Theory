@@ -254,9 +254,32 @@ bread = {
     'gluten-free' : False,
 
 }
-grocery = [ romaine, steak, almonds, cheese, bread ]
+spice = {
+    'sku' : "pepper",
+    'price' : 1000000,
+    'shelf' : "spice",
+    'category' : 'lux',
+    'quantity' : 0,
+    'discount' : .10,
+    'vegan-class': 'vegan',
+    'gluten-free' : True,
 
-def avg_price(list, target: str) -> float:
+}
+coffee = {
+    'sku' : "stumptown",
+    'price' : 10,
+    'shelf' : "coffee",
+    'category' : 'lux',
+    'quantity' : 0,
+    'discount' : .33,
+    'vegan-class': 'vegan',
+    'gluten-free' : True,
+
+}
+grocery = [ romaine, steak, almonds, cheese, bread, coffee, spice]
+grocery_types = ['cold', 'package', 'lux']
+
+def avg_price_helper(list: list, target: str) -> float:
     count = 0
     index = 0
     for key in list:
@@ -265,7 +288,14 @@ def avg_price(list, target: str) -> float:
             index += 1
     return(round(count/index))
 
-print(avg_price(grocery,'package'))
+def avg_price(listy: list) -> list:
+    avg = []
+    for x in listy:
+        avg.append(x + " $" + str(avg_price_helper(grocery, x)))
+    return avg
+
+print(avg_price(grocery_types))
+
 
 
 """
@@ -285,6 +315,16 @@ return that number
 List of dicts. Then run a for loop through the list. We will access the 
 
 """
+def is_vegan(lister: list) -> list:
+    veg_list = []
+    for xx in lister:
+        if xx['vegan-class'] == 'vegan':
+            veg_list.append(xx['shelf'] + " " + str(True))
+        else:
+            veg_list.append(xx['shelf'] + " " + str(False))
+
+    return veg_list
+print(is_vegan(grocery))
 
 
 """
@@ -297,12 +337,11 @@ and return a mapping of each shelf to a boolean if it has any vegan item or not.
 
 """
 
-def find_low_q (list):
+def find_low_q (list: list) -> list:
     low = []
     for key in list:
         if key['quantity'] <= 1:
             low.append(key['sku'])
-
     return low
 print(find_low_q(grocery))
 
