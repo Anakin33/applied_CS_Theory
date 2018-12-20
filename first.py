@@ -61,7 +61,7 @@ its nice you declare your variable types ahead of inputtingdata
 
 
 9. What does Optional mean? When should you use it?
-
+An optional allow for an input of none, along with another class. If there is a chance you could have a none input.
 '''
 '''
 ### Code challenges
@@ -165,9 +165,159 @@ P13. Write a function that takes as input a number x and tries to return 1/x. Co
 What should the function's return data type be?
 
 '''
-def divide(x):
+def divide(x: int) ->float:
     if x != 0:
         return 1/x
-print(divide(-44))
+#print(divide(-44))
 
 #Return is a float.
+
+'''
+### Project
+Design and implement the data structures for an inventory management system for Whole Foods.
+
+Each item in the inventory should include its
+name, 
+its SKU, 
+its price, 
+its shelf, 
+its category (e.g. produce, dairy), 
+and its quantity, 
+along with optional discount, 
+vegan classification (none, vegetarian, or vegan), 
+gluten-free classification (yes or no), 
+and any other thing you think is relevant.
+
+Decide which data structure you would use to collect all of the different inventory items together. 
+You don't need to group by any attribute, e.g. don't group by shelf or by category.
+
+Once you have this all designed, create 5-10 fake items to help with the below.
+
+--
+'''
+
+romaine = {
+    'sku' : "lettuce",
+    'price' : 1,
+    'shelf' : "veggies",
+    'category' : 'cold',
+    'quantity' : 10,
+    'discount' : .05,
+    'vegan-class': 'vegan',
+    'gluten-free' : True,
+}
+
+steak = {
+    'sku' : "steakers",
+    'price' : 50,
+    'shelf' : "meat",
+    'category' : 'cold',
+    'quantity' : 100,
+    'discount' : 0,
+    'vegan-class': 'none',
+    'gluten-free' : True,
+}
+
+
+almonds = {
+    'sku' : "almonds",
+    'price' : 5.99,
+    'shelf' : "nuts",
+    'category' : 'package',
+    'quantity' : 100000,
+    'discount' : .50,
+    'vegan-class': 'vegan',
+    'gluten-free' : True,
+}
+
+
+cheese = {
+    'sku' : "cheese",
+    'price' : 100,
+    'shelf' : "dairy",
+    'category' : 'cold',
+    'quantity' : 0,
+    'discount' : .10,
+    'vegan-class': 'vegetarian',
+    'gluten-free' : True,
+}
+
+
+bread = {
+    'sku' : "bready",
+    'price' : .99,
+    'shelf' : "junk",
+    'category' : 'package',
+    'quantity' : 0,
+    'discount' : .33,
+    'vegan-class': 'vegan',
+    'gluten-free' : False,
+
+}
+grocery = [ romaine, steak, almonds, cheese, bread ]
+
+def avg_price(list, target: str) -> float:
+    count = 0
+    index = 0
+    for key in list:
+        if key['category'] == target:
+            count += key['price']
+            index += 1
+    return(round(count/index))
+
+print(avg_price(grocery,'package'))
+
+
+"""
+Write a function that will find the average price per each category of food.
+It should take as an argument whichever collection you decide to use to collect all the inventory items,
+and return a mapping of each category to its average price.
+
+Need to group all of the dicts that have the same key value pairs and then add up there prices and divide by the total number of dicts
+
+Make list of dicts.
+for loop through dicts that used the category keyword as a target
+add the values into a sum variable
+add into an index tracker
+divide sum by index
+return that number
+
+List of dicts. Then run a for loop through the list. We will access the 
+
+"""
+
+
+"""
+
+Write a function that will find for each shelf if any of the items are vegan.
+It should take as an argument whichever collection you decide to use to collect all the inventory items, 
+and return a mapping of each shelf to a boolean if it has any vegan item or not.
+
+---
+
+"""
+
+def find_low_q (list):
+    low = []
+    for key in list:
+        if key['quantity'] <= 1:
+            low.append(key['sku'])
+
+    return low
+print(find_low_q(grocery))
+
+
+
+"""
+
+Write a function that will find which item(s) you only have 1 or less quantity of. 
+It should take as an argument whichever collection you decide to use to collect all the inventory items, 
+and return a collection of the matched items.
+
+--
+
+Include type hints throughout the project.
+
+__Note: in the real world, this would be hooked up to a database. But this is an exercise that you would have to do regardless.__
+
+"""
