@@ -78,7 +78,8 @@ P2. Given [-2, 0, -1, 5, 2], write a list comprehension that filters out any num
 
 '''
 list2 = [-2, 0, -1, 5, 2]
-filtered = [x+9 for x in list2 if x <= 0]
+filtered = [x + 9 for x in list2 if x <= 0]
+# TODO: you're filtering out anything > 0, rather than filtering out things <= 0
 #print(filtered)
 '''
 
@@ -94,6 +95,7 @@ P4. Return [2, 1, 0, -1, -2] reversed.
 '''
 ll = [2, 1, 0, -1, -2]
 ll.reverse()
+# TODO: return a new list, don't mutate the original one
 #print(ll)
 '''
 
@@ -117,12 +119,13 @@ P7. Given {"english": "hello", "spanish": "hola", "french": "bonjour"}, return a
 '''
 given = {"english": "hello", "spanish": "hola", "french": "bonjour"}
 #print(given.keys())
+# TODO: swap with question 8
 
 '''
 P8. Given {"english": "hello", "spanish": "hola", "french": "bonjour"}, return all the languages (without their corresponding greeting).
 '''
 #print(given.values())
-
+# TODO: swap with question 7
 '''
 
 P9. Given {"english": "hello", "spanish": "hola", "french": "bonjour"}, invert the keys and values so that the greeting is the key, and the language is the value. 
@@ -158,6 +161,7 @@ P12. Given ["a", "b", "c", "d"], print each letter along with its corresponding 
 '''
 lister = ["a", "b", "c", "d"]
 printer = [v for v in lister]
+# TODO: check out enumerate
 #print(printer)
 
 '''
@@ -167,7 +171,8 @@ What should the function's return data type be?
 '''
 def divide(x: int) ->float:
     if x != 0:
-        return 1/x
+        return 1 / x
+# TODO: what happens when x == 0? This should return Optional[float], not float
 #print(divide(-44))
 
 #Return is a float.
@@ -196,7 +201,23 @@ Once you have this all designed, create 5-10 fake items to help with the below.
 --
 '''
 
-romaine = {
+# TODO: set up an enum for Category (https://pythonspot.com/python-enum/)
+
+@dataclass
+class GroceryItem:
+    sku: str
+    price: float
+    discount: Optional[float] = None
+    # TODO: finish this
+
+# TODO: finish this
+romaine = GroceryItem(
+    sku="lettuce",
+    price=13.0
+    discount=8
+    )
+
+my_groceries = [{
     'sku' : "lettuce",
     'price' : 1,
     'shelf' : "veggies",
@@ -292,6 +313,9 @@ def avg_price(listy: list) -> list:
     avg = []
     for x in listy:
         avg.append(x + " $" + str(avg_price_helper(grocery, x)))
+
+    # TODO: try using the sum() and len() methods
+    # TODO: fix type hints for `List`
     return avg
 
 print(avg_price(grocery_types))
@@ -322,6 +346,9 @@ def is_vegan(lister: list) -> list:
             veg_list.append(xx['shelf'] + " " + str(True))
         else:
             veg_list.append(xx['shelf'] + " " + str(False))
+    
+    # TODO: use dictionary comprehension and try out the any() function
+    # TODO: fix type hints
 
     return veg_list
 print(is_vegan(grocery))
@@ -343,6 +370,8 @@ def find_low_q (list: list) -> list:
         if key['quantity'] <= 1:
             low.append(key['sku'])
     return low
+    # TODO: use list comprehension
+    # TODO: fix type hints
 print(find_low_q(grocery))
 
 
