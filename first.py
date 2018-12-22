@@ -168,7 +168,7 @@ What should the function's return data type be?
 
 '''
 from typing import Optional
-def divide(x: Optional[int]) ->float:
+def divide(x: int) ->Optional[float]:
     if x == 0:
         return None
     return 1/x
@@ -209,9 +209,9 @@ class groceryItem:
     shelf: str
     category: str
     quantity: int
-    discount: float
-    vegan_class: str
-    gluten_free: bool
+    discount: Optional[float] = None
+    vegan_class: Optional[str] = None
+    gluten_free: bool = False
 
 
 
@@ -227,6 +227,7 @@ grocery = [romaine, steak, almonds, cheese, bread, coffee, spice]
 grocery_types = ['cold', 'package', 'lux']
 
 def avg_price_helper(list: list, target: str) -> float:
+    #same helper function to group into shelves
     count = 0
     index = 0
     for key in list:
@@ -234,7 +235,7 @@ def avg_price_helper(list: list, target: str) -> float:
             count += key.price
             index += 1
     return(round(count/index))
-
+# Once you have the self then figure out the average.
 def avg_price(listy: list) -> list:
     avg_price = [sum(x.price)]
     avg = []
@@ -244,6 +245,7 @@ def avg_price(listy: list) -> list:
 
 print(avg_price(grocery_types))
 
+#READ Enums!
 
 
 """
@@ -263,9 +265,15 @@ return that number
 List of dicts. Then run a for loop through the list. We will access the 
 
 """
-def is_vegan(lister: list) -> list:
-    veggie_list = [xx.sku + " true" if xx.vegan_class == 'vegan' else xx.sku + " false" for xx in lister]
-    return veggie_list
+def is_vegan(lister: list) -> Dict[str, bool]:
+    #Step1: Sort
+    #output:
+    ["starbucks", "peets", "steak"]
+    {"coffee": [starbucks, peets], "meat": [steak]}
+    any()
+    #filter the above dict
+    return {x.shelf: True if x.vegan_class == 'vegan' else False for x in lister}
+
 
 print(is_vegan(grocery))
 
@@ -275,15 +283,12 @@ print(is_vegan(grocery))
 Write a function that will find for each shelf if any of the items are vegan.
 It should take as an argument whichever collection you decide to use to collect all the inventory items, 
 and return a mapping of each shelf to a boolean if it has any vegan item or not.
-
 ---
 
 """
-
-def find_low_q (list: list) -> list:
-    low = [x.sku for x in list if x.quantity <= 1]
-    return low
-
+from typing import List
+def find_low_q (groceries: List[groceryItem]) -> List[groceryItem]:
+    return [x for x in groceries if x.quantity <= 1]
 
 print(find_low_q(grocery))
 
