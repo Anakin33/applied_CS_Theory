@@ -93,7 +93,7 @@ P4. Return [2, 1, 0, -1, -2] reversed.
 
 '''
 ll = [2, 1, 0, -1, -2]
-ll.reverse()
+reversed(ll)
 #print(ll)
 '''
 
@@ -116,12 +116,12 @@ P7. Given {"english": "hello", "spanish": "hola", "french": "bonjour"}, return a
 
 '''
 given = {"english": "hello", "spanish": "hola", "french": "bonjour"}
-#print(given.keys())
+#print(given.values())
 
 '''
 P8. Given {"english": "hello", "spanish": "hola", "french": "bonjour"}, return all the languages (without their corresponding greeting).
 '''
-#print(given.values())
+#print(given.keys())
 
 '''
 
@@ -157,17 +157,21 @@ P12. Given ["a", "b", "c", "d"], print each letter along with its corresponding 
 
 '''
 lister = ["a", "b", "c", "d"]
-printer = [v for v in lister]
+printer = [v for v in enumerate(lister)]
+
 #print(printer)
+
 
 '''
 P13. Write a function that takes as input a number x and tries to return 1/x. Consider what should happen when x == 0? 
 What should the function's return data type be?
 
 '''
-def divide(x: int) ->float:
-    if x != 0:
-        return 1/x
+from typing import Optional
+def divide(x: Optional[int]) ->float:
+    if x == 0:
+        return None
+    return 1/x
 #print(divide(-44))
 
 #Return is a float.
@@ -196,86 +200,29 @@ Once you have this all designed, create 5-10 fake items to help with the below.
 --
 '''
 
-romaine = {
-    'sku' : "lettuce",
-    'price' : 1,
-    'shelf' : "veggies",
-    'category' : 'cold',
-    'quantity' : 10,
-    'discount' : .05,
-    'vegan-class': 'vegan',
-    'gluten-free' : True,
-}
+from dataclasses import dataclass
 
-steak = {
-    'sku' : "steakers",
-    'price' : 50,
-    'shelf' : "meat",
-    'category' : 'cold',
-    'quantity' : 100,
-    'discount' : 0,
-    'vegan-class': 'none',
-    'gluten-free' : True,
-}
+@dataclass
+class groceryItem:
+    sku: str
+    price: float
+    shelf: str
+    category: str
+    quantity: int
+    discount: float
+    vegan_class: str
+    gluten_free: bool
 
 
-almonds = {
-    'sku' : "almonds",
-    'price' : 5.99,
-    'shelf' : "nuts",
-    'category' : 'package',
-    'quantity' : 100000,
-    'discount' : .50,
-    'vegan-class': 'vegan',
-    'gluten-free' : True,
-}
 
+romaine = groceryItem("lettuce", 1, "veggies", 'cold', 10, .05, 'vegan',True)
+steak = groceryItem("steakers", 50, "meat", 'cold', 100, .01, 'none',True)
+almonds = groceryItem("almonds", 5.99, "nuts", 'package', 10000, .50, 'vegan',True)
+cheese = groceryItem("cheese", 100, "dairy", 'cold', 0, .15, 'vegetarian',True)
+bread = groceryItem("bready", .99, "junk", 'package', 0, .33, 'vegan',False)
+spice = groceryItem("pepper", 100000, "spice", 'lux', 0, .10, 'vegan',True)
+coffee = groceryItem("stumptown", 10, "coffee", 'lux', 0, .33, 'vegan',True)
 
-cheese = {
-    'sku' : "cheese",
-    'price' : 100,
-    'shelf' : "dairy",
-    'category' : 'cold',
-    'quantity' : 0,
-    'discount' : .10,
-    'vegan-class': 'vegetarian',
-    'gluten-free' : True,
-}
-
-
-bread = {
-    'sku' : "bready",
-    'price' : .99,
-    'shelf' : "junk",
-    'category' : 'package',
-    'quantity' : 0,
-    'discount' : .33,
-    'vegan-class': 'vegan',
-    'gluten-free' : False,
-
-}
-spice = {
-    'sku' : "pepper",
-    'price' : 1000000,
-    'shelf' : "spice",
-    'category' : 'lux',
-    'quantity' : 0,
-    'discount' : .10,
-    'vegan-class': 'vegan',
-    'gluten-free' : True,
-
-}
-coffee = {
-    'sku' : "stumptown",
-    'price' : 10,
-    'shelf' : "coffee",
-    'category' : 'lux',
-    'quantity' : 0,
-    'discount' : .33,
-    'vegan-class': 'vegan',
-    'gluten-free' : True,
-
-}
 grocery = [romaine, steak, almonds, cheese, bread, coffee, spice]
 grocery_types = ['cold', 'package', 'lux']
 
@@ -283,12 +230,13 @@ def avg_price_helper(list: list, target: str) -> float:
     count = 0
     index = 0
     for key in list:
-        if key['category'] == target:
-            count += key['price']
+        if key.category == target:
+            count += key.price
             index += 1
     return(round(count/index))
 
 def avg_price(listy: list) -> list:
+    avg_price = [sum(x.price)]
     avg = []
     for x in listy:
         avg.append(x + " $" + str(avg_price_helper(grocery, x)))
@@ -316,14 +264,9 @@ List of dicts. Then run a for loop through the list. We will access the
 
 """
 def is_vegan(lister: list) -> list:
-    veg_list = []
-    for xx in lister:
-        if xx['vegan-class'] == 'vegan':
-            veg_list.append(xx['shelf'] + " " + str(True))
-        else:
-            veg_list.append(xx['shelf'] + " " + str(False))
+    veggie_list = [xx.sku + " true" if xx.vegan_class == 'vegan' else xx.sku + " false" for xx in lister]
+    return veggie_list
 
-    return veg_list
 print(is_vegan(grocery))
 
 
@@ -338,11 +281,10 @@ and return a mapping of each shelf to a boolean if it has any vegan item or not.
 """
 
 def find_low_q (list: list) -> list:
-    low = []
-    for key in list:
-        if key['quantity'] <= 1:
-            low.append(key['sku'])
+    low = [x.sku for x in list if x.quantity <= 1]
     return low
+
+
 print(find_low_q(grocery))
 
 
