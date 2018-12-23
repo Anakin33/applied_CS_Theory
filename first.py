@@ -201,49 +201,56 @@ Once you have this all designed, create 5-10 fake items to help with the below.
 '''
 
 from dataclasses import dataclass
+from enum import Enum
+from typing import List, Dict
+
+
+class GroceryTypes(Enum):
+    COLD = 'cold'
+    PACKAGE = 'package'
+    LUX = 'lux'
 
 @dataclass
 class groceryItem:
     sku: str
     price: float
     shelf: str
-    category: str
+    category: GroceryTypes
     quantity: int
     discount: Optional[float] = None
     vegan_class: Optional[str] = None
     gluten_free: bool = False
 
 
+romaine = groceryItem("lettuce", 1, "veggies",GroceryTypes.COLD, 10, .05, 'vegan', True)
+steak = groceryItem("steakers", 50, "meat", GroceryTypes.COLD, 100, .01, 'none', True)
+almonds = groceryItem("almonds", 5.99, "nuts", GroceryTypes.PACKAGE, 10000, .50, 'vegan', True)
+cheese = groceryItem("cheese", 100, "dairy", GroceryTypes.COLD, 0, .15, 'vegetarian', True)
+bread = groceryItem("bready", .99, "junk", 'package', 0, .33, 'vegan', False)
+spice = groceryItem("pepper", 100000, "spice", 'lux', 0, .10, 'vegan', True)
+coffee = groceryItem("stumptown", 10, "coffee", 'lux', 0, .33, 'vegan', True)
+tea = groceryItem("green tea ", 20, "coffee", 'lux', 0, .33, 'vegan', True)
+chocolate = groceryItem("dark chocolate", 30, "coffee", 'lux', 0, .33, 'none', True)
 
-romaine = groceryItem("lettuce", 1, "veggies", 'cold', 10, .05, 'vegan',True)
-steak = groceryItem("steakers", 50, "meat", 'cold', 100, .01, 'none',True)
-almonds = groceryItem("almonds", 5.99, "nuts", 'package', 10000, .50, 'vegan',True)
-cheese = groceryItem("cheese", 100, "dairy", 'cold', 0, .15, 'vegetarian',True)
-bread = groceryItem("bready", .99, "junk", 'package', 0, .33, 'vegan',False)
-spice = groceryItem("pepper", 100000, "spice", 'lux', 0, .10, 'vegan',True)
-coffee = groceryItem("stumptown", 10, "coffee", 'lux', 0, .33, 'vegan',True)
+grocery = [romaine, steak, almonds, cheese, bread, coffee, spice, tea, chocolate]
 
-grocery = [romaine, steak, almonds, cheese, bread, coffee, spice]
-grocery_types = ['cold', 'package', 'lux']
+{"coffee": [tea, chocolate]}
 
-def avg_price_helper(list: list, target: str) -> float:
-    #same helper function to group into shelves
-    count = 0
-    index = 0
-    for key in list:
-        if key.category == target:
-            count += key.price
-            index += 1
-    return(round(count/index))
+def sort_to_shelf(listy):
+    '''
+    #iterate through the grocery list
+    #Pull out .shelf from each dataclass
+    #some how compare that to our current dict.
+    # If the key is there, then add a value, if its not, then create a new key value pair
+    #should return a sorted dictionary with each sku in shelf keys.
+    #how do we actually select the data class so we can pull information later.
+    '''
+    return [x for x in listy]
+
+print(sort_to_shelf(grocery))
+
 # Once you have the self then figure out the average.
-def avg_price(listy: list) -> list:
-    avg_price = [sum(x.price)]
-    avg = []
-    for x in listy:
-        avg.append(x + " $" + str(avg_price_helper(grocery, x)))
-    return avg
 
-print(avg_price(grocery_types))
 
 #READ Enums!
 
@@ -265,6 +272,7 @@ return that number
 List of dicts. Then run a for loop through the list. We will access the 
 
 """
+'''
 def is_vegan(lister: list) -> Dict[str, bool]:
     #Step1: Sort
     #output:
@@ -276,6 +284,7 @@ def is_vegan(lister: list) -> Dict[str, bool]:
 
 
 print(is_vegan(grocery))
+'''
 
 
 """
@@ -286,11 +295,11 @@ and return a mapping of each shelf to a boolean if it has any vegan item or not.
 ---
 
 """
-from typing import List
+
 def find_low_q (groceries: List[groceryItem]) -> List[groceryItem]:
     return [x for x in groceries if x.quantity <= 1]
 
-print(find_low_q(grocery))
+#print(find_low_q(grocery))
 
 
 
