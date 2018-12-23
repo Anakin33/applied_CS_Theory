@@ -222,19 +222,19 @@ class groceryItem:
     gluten_free: bool = False
 
 
-romaine = groceryItem("lettuce", 1, "veggies",GroceryTypes.COLD, 10, .05, 'vegan', True)
+romaine = groceryItem("lettuce", 1, "veggies", GroceryTypes.COLD, 10, .05, 'vegan', True)
 steak = groceryItem("steakers", 50, "meat", GroceryTypes.COLD, 100, .01, 'none', True)
 almonds = groceryItem("almonds", 5.99, "nuts", GroceryTypes.PACKAGE, 10000, .50, 'vegan', True)
 cheese = groceryItem("cheese", 100, "dairy", GroceryTypes.COLD, 0, .15, 'vegetarian', True)
-bread = groceryItem("bready", .99, "junk", 'package', 0, .33, 'vegan', False)
-spice = groceryItem("pepper", 100000, "spice", 'lux', 0, .10, 'vegan', True)
-coffee = groceryItem("stumptown", 10, "coffee", 'lux', 0, .33, 'vegan', True)
-tea = groceryItem("green tea ", 20, "coffee", 'lux', 0, .33, 'vegan', True)
-chocolate = groceryItem("dark chocolate", 30, "coffee", 'lux', 0, .33, 'none', True)
+bread = groceryItem("bready", .99, "junk", GroceryTypes.PACKAGE, 0, .33, 'vegan', False)
+spice = groceryItem("pepper", 100000, "spice", GroceryTypes.LUX, 0, .10, 'vegan', True)
+coffee = groceryItem("stumptown", 10, "coffee", GroceryTypes.LUX, 0, .33, 'vegan', True)
+tea = groceryItem("green tea ", 20, "coffee", GroceryTypes.LUX, 0, .33, 'vegan', True)
+chocolate = groceryItem("dark chocolate", 30, "coffee", GroceryTypes.LUX, 0, .33, 'none', True)
 
 grocery = [romaine, steak, almonds, cheese, bread, coffee, spice, tea, chocolate]
 
-{"coffee": [tea, chocolate]}
+from itertools import groupby
 
 def sort_to_shelf(listy):
     '''
@@ -244,15 +244,22 @@ def sort_to_shelf(listy):
     # If the key is there, then add a value, if its not, then create a new key value pair
     #should return a sorted dictionary with each sku in shelf keys.
     #how do we actually select the data class so we can pull information later.
+    GROUPBY
+
     '''
-    return [x for x in listy]
+    sorted_list = sorted(listy, key=lambda grocery: grocery.shelf)
+    return sorted_list
+
+
+
+
 
 print(sort_to_shelf(grocery))
 
-# Once you have the self then figure out the average.
+#listy.groupby('shelf').price.mean()
 
+# Once you have the self then figure out the average. SUM FUNCTION
 
-#READ Enums!
 
 
 """
@@ -273,6 +280,7 @@ List of dicts. Then run a for loop through the list. We will access the
 
 """
 '''
+ANY FUNCTION
 def is_vegan(lister: list) -> Dict[str, bool]:
     #Step1: Sort
     #output:
