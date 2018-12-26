@@ -222,69 +222,59 @@ class groceryItem:
     gluten_free: bool = False
 
 
-romaine = groceryItem("lettuce", 1, "veggies",GroceryTypes.COLD, 10, .05, 'vegan', True)
+romaine = groceryItem("lettuce", 1, "veggies", GroceryTypes.COLD, 10, .05, 'vegan', True)
 steak = groceryItem("steakers", 50, "meat", GroceryTypes.COLD, 100, .01, 'none', True)
 almonds = groceryItem("almonds", 5.99, "nuts", GroceryTypes.PACKAGE, 10000, .50, 'vegan', True)
-cheese = groceryItem("cheese", 100, "dairy", GroceryTypes.COLD, 0, .15, 'vegetarian', True)
-bread = groceryItem("bready", .99, "junk", 'package', 0, .33, 'vegan', False)
-spice = groceryItem("pepper", 100000, "spice", 'lux', 0, .10, 'vegan', True)
-coffee = groceryItem("stumptown", 10, "coffee", 'lux', 0, .33, 'vegan', True)
-tea = groceryItem("green tea ", 20, "coffee", 'lux', 0, .33, 'vegan', True)
-chocolate = groceryItem("dark chocolate", 30, "coffee", 'lux', 0, .33, 'none', True)
+cheese = groceryItem("cheese", 100, "dairy", GroceryTypes.COLD, 1, .15, 'vegetarian', True)
+bread = groceryItem("bready", .99, "junk", GroceryTypes.PACKAGE, 2, .33, 'vegan', False)
+spice = groceryItem("pepper", 100000, "spice", GroceryTypes.LUX, 0, .10, 'vegan', True)
+coffee = groceryItem("stumptown", 10, "coffee", GroceryTypes.LUX, 0, .33, 'vegan', True)
+tea = groceryItem("green tea ", 20, "coffee", GroceryTypes.LUX, 3, .33, 'vegan', True)
+chocolate = groceryItem("dark chocolate", 30, "coffee", GroceryTypes.LUX, 2, .33, 'none', True)
 
 grocery = [romaine, steak, almonds, cheese, bread, coffee, spice, tea, chocolate]
 
-{"coffee": [tea, chocolate]}
+from itertools import groupby
+import math
+
 
 def sort_to_shelf(listy):
-    '''
-    #iterate through the grocery list
-    #Pull out .shelf from each dataclass
-    #some how compare that to our current dict.
-    # If the key is there, then add a value, if its not, then create a new key value pair
-    #should return a sorted dictionary with each sku in shelf keys.
-    #how do we actually select the data class so we can pull information later.
-    '''
-    return [x for x in listy]
-
-print(sort_to_shelf(grocery))
-
-# Once you have the self then figure out the average.
+    sorted_list = sorted(listy, key=lambda x: x.shelf)
+    return groupby(sorted_list, lambda x: x.shelf)
 
 
-#READ Enums!
+def get_average(listy):
+    start = sort_to_shelf(listy)
+    return {shelf: math.floor(sum(grocery.price for grocery in groceries)/len(grocery)) for shelf,groceries in start}
+
+
+
+print(get_average(grocery))
+
+"""
+for key, group in groupby(things, lambda x: x[0]):
+    listOfThings = " and ".join([thing[1] for thing in group])
+    print key + "s:  " + listOfThings + "."
+    
+"""
 
 
 """
-Write a function that will find the average price per each category of food.
+Write a function that will find the average price per each shelf of food.
 It should take as an argument whichever collection you decide to use to collect all the inventory items,
 and return a mapping of each category to its average price.
 
 Need to group all of the dicts that have the same key value pairs and then add up there prices and divide by the total number of dicts
 
-Make list of dicts.
-for loop through dicts that used the category keyword as a target
-add the values into a sum variable
-add into an index tracker
-divide sum by index
-return that number
-
-List of dicts. Then run a for loop through the list. We will access the 
 
 """
-'''
-def is_vegan(lister: list) -> Dict[str, bool]:
-    #Step1: Sort
-    #output:
-    ["starbucks", "peets", "steak"]
-    {"coffee": [starbucks, peets], "meat": [steak]}
-    any()
-    #filter the above dict
-    return {x.shelf: True if x.vegan_class == 'vegan' else False for x in lister}
+
+def is_vegan(listy):
+    start = sort_to_shelf(listy)
+    return {shelf: any(grocery.vegan_class == 'vegan' for grocery in groceries)for shelf,groceries in start}
 
 
 print(is_vegan(grocery))
-'''
 
 
 """
@@ -295,11 +285,10 @@ and return a mapping of each shelf to a boolean if it has any vegan item or not.
 ---
 
 """
+def find_low_q (listy: List[groceryItem]) -> List[groceryItem]:
+    return [xx.sku for xx in listy if xx.quantity <= 1]
 
-def find_low_q (groceries: List[groceryItem]) -> List[groceryItem]:
-    return [x for x in groceries if x.quantity <= 1]
-
-#print(find_low_q(grocery))
+print(find_low_q(grocery))
 
 
 
